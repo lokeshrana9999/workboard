@@ -368,7 +368,7 @@ export const register: Register = on => {
     return next(e)
   })
 
-  on('ui.close', async ($, e, next) => {
+  on('ui.close', async (_$, e, next) => {
     if (e.id === PANE) {
       isPaneOpen = false
     }

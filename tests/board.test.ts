@@ -268,7 +268,6 @@ test('Sonnet describes the flow and the terminal draws it as coloured Raster car
   expect(cellColors(raster, 'Tests pass?')).toEqual({ fg: 0x1a1a1a, bg: 0xffb300 })
   expect(cellColors(raster, 'Design review')).toEqual({ fg: 0xffffff, bg: 0x546e7a })
   expect(cellColors(raster, '▶')).toEqual({ fg: 0x8a8f98, bg: 0x01000000 })
-  console.log(`Raster sample (${raster?.props.columns}x${raster?.props.rows}):\n${rows.map(r => `|${r}|`).join('\n')}`)
   await pane.unmount()
 
   const board = String((await $.tool.call({ tool: 'mcp__workboard__open_board' })).result)
