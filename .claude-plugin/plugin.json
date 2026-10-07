@@ -1,0 +1,6 @@
+{
+  "name": "workboard",
+  "version": "0.1.0",
+  "description": "Live progress board for long-running work: subagents, main turn, test runs, context and plan limits. /board, a band above the prompt, and a tool Claude can call.",
+  "types": "./types/index.d.ts"
+}
