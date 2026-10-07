@@ -1,19 +1,20 @@
 # workboard
 
-A Claude Code mod: one live progress board for long-running work in a session.
+A Claude Code mod: one live view of long-running work in a session.
 
-- **Subagents.** Tracks each top-level subagent (started, tool calls, last activity, finished, failed) and groups agents that run together into a batch, e.g. "3/5 done, ~4m left".
-- **Test runs.** Notices test commands run through Bash or PowerShell and keeps their result.
-- **Context and plan limits.** Shows context fill, plan limits and cost in the board text.
-- **Flow and summary.** While the pane is open, a Sonnet call describes the job as a flow diagram (drawn as Raster, SVG or ASCII by `hooks/flow.ts`) and a Haiku call writes a short summary. Both are rate limited and skipped when nothing changed.
+It tracks each top-level subagent (started, tool calls, last activity, finished, failed), groups agents that run together into a batch for an ETA, notices test commands run through Bash or PowerShell, and reads context fill, plan limits and cost. Each surface shows a different slice of that.
 
 ## surfaces
 
-| Surface | What it does |
+| Surface | What it shows |
 |---|---|
-| `/board` | Opens the board pane. Its one control, ↻, reruns the flow and summary now. |
-| Band above the prompt | Shows while agents run. |
-| `open_board` tool | Claude calls it when asked for status. It opens the pane and returns the board as text. |
+| `/board` pane | A flow diagram of the job, a ↻ button that reruns it now, and a short summary of where things stand. |
+| Band above the prompt | Only while agents run and the pane is closed: agents done out of total, failures, ETA, elapsed time, and on wide terminals context % and the last test result. |
+| `open_board` tool | Claude calls it when asked for status. It opens the pane and returns the full board as text to Claude: agents, main turn, tests, context, plan limits and cost. |
+
+Plan limits and cost appear only in the tool's text, since the status line already shows them.
+
+The flow diagram comes from a Sonnet call and the summary from a Haiku call. Both run only while the pane is open, are rate limited, and are skipped when nothing changed. `hooks/flow.ts` draws the diagram as Raster cells in the terminal, SVG in the desktop app, or ASCII elsewhere.
 
 State lives in `$.state`, so a hot reload keeps agents, the batch, the flow and the summary.
 
